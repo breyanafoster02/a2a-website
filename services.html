@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services | A2A Solutions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0d1b2a;
+      --navy-mid: #142030;
+      --navy-light: #1c2f42;
+      --gold: #c9a84c;
+      --gold-light: #e2c47a;
+      --white: #ffffff;
+      --off-white: #f2f0eb;
+      --slate: #8fa0b0;
+      --teal-accent: #5ba4b0;
+      --card-bg: #162333;
+      --card-border: rgba(201,168,76,0.25);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--navy);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--slate);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      text-align: center;
+      padding: 5rem 1.5rem 3.5rem;
+      background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(201,168,76,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .page-header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+    }
+    .page-header p {
+      font-size: 0.95rem;
+      color: var(--slate);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── TRACK TOGGLE ── */
+    .track-toggle-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 2.5rem 1.5rem 0;
+    }
+    .track-toggle {
+      display: flex;
+      background: var(--navy-light);
+      border: 1px solid var(--card-border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .track-btn {
+      padding: 0.75rem 2rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--slate);
+      transition: all 0.25s;
+      position: relative;
+    }
+    .track-btn.active {
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 600;
+    }
+    .track-btn:not(.active):hover { color: var(--white); }
+
+    /* ── TRACK CONTENT ── */
+    .track-section {
+      display: none;
+      padding: 3rem 1.5rem 1rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .track-section.visible { display: block; }
+
+    .track-intro {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .track-intro .audience-badge {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.35rem 1rem;
+      border-radius: 2px;
+      margin-bottom: 1.2rem;
+    }
+    .track-intro h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 500;
+      margin-bottom: 0.85rem;
+      line-height: 1.2;
+    }
+    .track-intro p {
+      color: var(--slate);
+      font-size: 0.92rem;
+      line-height: 1.75;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    /* ── TIER GRID ── */
+    .tier-grid {
+      display: grid;
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+    .tier-grid.two-col { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .tier-grid.three-col { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+    .tier-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+    .tier-card:hover {
+      border-color: rgba(201,168,76,0.55);
+      transform: translateY(-2px);
+    }
+    .tier-label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: var(--gold);
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 2px;
+      margin-bottom: 1rem;
+    }
+    .tier-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      line-height: 1.25;
+      margin-bottom: 0.4rem;
+      color: var(--white);
+    }
+    .tier-tagline {
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--gold-light);
+      margin-bottom: 1.4rem;
+    }
+    .tier-features {
+      list-style: none;
+      flex: 1;
+      margin-bottom: 1.75rem;
+    }
+    .tier-features li {
+      font-size: 0.82rem;
+      color: var(--off-white);
+      line-height: 1.5;
+      padding: 0.3rem 0;
+      padding-left: 1.1rem;
+      position: relative;
+    }
+    .tier-features li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-size: 0.9rem;
+    }
+
+    /* Inclusions (checkmark items) */
+    .tier-includes {
+      border-top: 1px solid rgba(201,168,76,0.15);
+      padding-top: 1rem;
+      margin-bottom: 1.5rem;
+      list-style: none;
+    }
+    .tier-includes li {
+      font-size: 0.78rem;
+      color: var(--slate);
+      padding: 0.25rem 0;
+      padding-left: 1.3rem;
+      position: relative;
+    }
+    .tier-includes li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--teal-accent);
+      font-size: 0.78rem;
+    }
+
+    .tier-pricing {
+      border-top: 1px solid rgba(201,168,76,0.2);
+      padding-top: 1.25rem;
+    }
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.5rem;
+    }
+    .price-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--slate);
+    }
+    .price-value {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .price-note {
+      font-size: 0.7rem;
+      color: var(--slate);
+      margin-top: 0.25rem;
+    }
+
+    /* ── WHY A2A ── */
+    .why-a2a {
+      background: var(--navy-light);
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      padding: 2.5rem;
+      margin-bottom: 4rem;
+    }
+    .why-a2a-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .why-a2a-header .section-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .why-a2a-header .pull-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.15rem, 2.5vw, 1.55rem);
+      font-style: italic;
+      color: var(--gold-light);
+      line-height: 1.4;
+    }
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .comp-col {
+      background: rgba(13,27,42,0.6);
+      border-radius: 4px;
+      padding: 1.5rem;
+    }
+    .comp-col.a2a-col { border: 1px solid rgba(201,168,76,0.4); }
+    .comp-col.hire-col { border: 1px solid rgba(143,160,176,0.2); }
+    .comp-col-title {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .hire-col .comp-col-title { color: var(--slate); }
+    .a2a-col .comp-col-title { color: var(--gold); }
+    .comp-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.4rem 0;
+      font-size: 0.82rem;
+    }
+    .comp-row .comp-key { color: var(--slate); }
+    .comp-row .comp-val { font-weight: 500; }
+    .hire-col .comp-val { color: var(--off-white); }
+    .a2a-col .comp-check { color: var(--teal-accent); font-size: 0.9rem; }
+    .total-row {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .total-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--slate);
+    }
+    .hire-col .total-val { color: var(--off-white); font-weight: 600; font-size: 1rem; }
+    .a2a-col .total-val { color: var(--gold); font-weight: 700; font-size: 1.05rem; }
+    .comparison-footnote {
+      font-size: 0.7rem;
+      color: var(--slate);
+      text-align: center;
+      margin-top: 1.25rem;
+      line-height: 1.6;
+    }
+
+    /* ── DIVIDER ── */
+    .gold-divider {
+      width: 48px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto 1.5rem;
+    }
+
+    /* ── FOOTER CTA ── */
+    .footer-cta {
+      text-align: center;
+      padding: 4rem 1.5rem;
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+    .footer-cta p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      color: var(--off-white);
+      font-weight: 500;
+      margin-bottom: 2rem;
+      line-height: 1.3;
+    }
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .contact-item {
+      font-size: 0.82rem;
+      color: var(--slate);
+    }
+    .contact-item a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .contact-item a:hover { text-decoration: underline; }
+
+    .page-footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.72rem;
+      color: var(--slate);
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .page-footer span { color: var(--gold); }
+
+    @media (max-width: 640px) {
+      .comparison-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .track-btn { padding: 0.65rem 1.25rem; font-size: 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">A2A <span>SOLUTIONS</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html" class="active">Services</a></li>
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <p class="eyebrow">Financial Management & Advisory Services</p>
+  <h1>Services Built Around<br>Your Stage of Growth</h1>
+  <p>Senior-level federal financial management advisory — structured for where you are and where you're going. No permanent headcount required.</p>
+</header>
+
+<!-- TRACK TOGGLE -->
+<div class="track-toggle-wrap">
+  <div class="track-toggle">
+    <button class="track-btn active" onclick="switchTrack('small')">Small & Emerging GovCon</button>
+    <button class="track-btn" onclick="switchTrack('large')">Mid & Large GovCon</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     TRACK 1 — SMALL & EMERGING
+════════════════════════════════════════════════════ -->
+<section class="track-section visible" id="track-small">
+  <div class="track-intro">
+    <span class="audience-badge">Small &amp; Emerging GovCon Firms</span>
+    <div class="gold-divider"></div>
+    <h2>Clarity and Control<br>Without the Overhead</h2>
+    <p>A2A delivers senior-level financial management advisory to small and emerging GovCon firms — bringing execution oversight, strategic clarity, and executive-ready reporting without adding permanent headcount.</p>
+  </div>
+
+  <!-- TIERS -->
+  <div class="tier-grid two-col">
+
+    <!-- TIER I -->
+    <div class="tier-card">
+      <span class="tier-label">Tier I</span>
+      <h3>Budget Clarity</h3>
+      <p class="tier-tagline">Know where your money is — and where it's going.</p>
+      <ul class="tier-features">
+        <li>Budget execution &amp; spend plan review</li>
+        <li>Burn rate trend analysis</li>
+        <li>Variance identification &amp; risk flagging</li>
+        <li>Expiring funds exposure review</li>
+        <li>Written recommendations &amp; corrective options</li>
+        <li>Executive-ready 1–2 page summary</li>
+      </ul>
+      <ul class="tier-includes">
+        <li>Monthly dashboard snapshot</li>
+        <li>Priority 48hr response</li>
+        <li>Overage billed at $125/hr</li>
+      </ul>
+      <div class="tier-pricing">
+        <div class="price-row">
+          <span class="price-label">Retainer</span>
+          <span class="price-value">$1,500/mo</span>
+        </div>
+        <p class="price-note">3-month minimum</p>
+        <div class="price-row" style="margin-top: 0.75rem;">
+          <span class="price-label">Project</span>
+          <span class="price-value">$2,500</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIER II -->
+    <div class="tier-card">
+      <span class="tier-label">Tier II</span>
+      <h3>Financial Strategy &amp; Intelligence</h3>
+      <p class="tier-tagline">Active advisory partnership — plus the data infrastructure to back it up.</p>
+      <ul class="tier-features">
+        <li>Everything in Tier I</li>
+        <li>Monthly structured leadership review</li>
+        <li>Scenario &amp; tradeoff analysis</li>
+        <li>Reprogramming &amp; execution strategy guidance</li>
+        <li>CFO/PM briefing preparation</li>
+        <li>Dashboard design, KPI alignment &amp; data model cleanup</li>
+        <li>Knowledge transfer &amp; sustainability docs</li>
+      </ul>
+      <ul class="tier-includes">
+        <li>Monthly dashboard snapshot</li>
+        <li>Priority 48hr response</li>
+        <li>Overage billed at $125/hr</li>
+      </ul>
+      <div class="tier-pricing">
+        <div class="price-row">
+          <span class="price-label">Retainer</span>
+          <span class="price-value">$3,500/mo</span>
+        </div>
+        <p class="price-note">3-month minimum</p>
+        <div class="price-row" style="margin-top: 0.75rem;">
+          <span class="price-label">Project</span>
+          <span class="price-value">$6,500</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tier-grid -->
+
+  <!-- WHY A2A — SMALL -->
+  <div class="why-a2a">
+    <div class="why-a2a-header">
+      <p class="section-eyebrow">Why A2A</p>
+      <p class="pull-quote">"Why add headcount when you can add expertise?"</p>
+    </div>
+    <div class="comparison-grid">
+      <div class="comp-col hire-col">
+        <div class="comp-col-title">Full-Time FM Hire (W2)</div>
+        <div class="comp-row"><span class="comp-key">Salary</span><span class="comp-val">$85K/yr</span></div>
+        <div class="comp-row"><span class="comp-key">Benefits &amp; taxes (~30%)</span><span class="comp-val">$25K/yr</span></div>
+        <div class="comp-row"><span class="comp-key">Onboarding &amp; overhead</span><span class="comp-val">$5K+</span></div>
+        <div class="total-row"><span class="total-label">Total Loaded Cost</span><span class="total-val">~$9,600/mo</span></div>
+      </div>
+      <div class="comp-col a2a-col">
+        <div class="comp-col-title">A2A Solutions (Advisory)</div>
+        <div class="comp-row"><span class="comp-key">Senior-level FM expertise</span><span class="a2a-check">✓</span></div>
+        <div class="comp-row"><span class="comp-key">No benefits or overhead</span><span class="a2a-check">✓</span></div>
+        <div class="comp-row"><span class="comp-key">No long-term commitment</span><span class="a2a-check">✓</span></div>
+        <div class="total-row"><span class="total-label">Starting At</span><span class="total-val">$1,500/mo</span></div>
+      </div>
+    </div>
+    <p class="comparison-footnote">Salary estimate based on mid-level federal FM analyst. Loaded cost includes benefits, payroll taxes, and general overhead. A2A delivers senior-level advisory at a fraction of the cost — scalable, flexible, and commitment-free.</p>
+  </div>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     TRACK 2 — MID & LARGE
+════════════════════════════════════════════════════ -->
+<section class="track-section" id="track-large">
+  <div class="track-intro">
+    <span class="audience-badge">Mid &amp; Large GovCon Firms</span>
+    <div class="gold-divider"></div>
+    <h2>Executive-Ready Advisory<br>Without the W2</h2>
+    <p>A2A Solutions delivers senior-level financial management advisory to mid and large GovCon organizations — bringing execution oversight, strategic clarity, and executive-ready reporting without adding permanent headcount.</p>
+  </div>
+
+  <!-- TIERS -->
+  <div class="tier-grid three-col">
+
+    <!-- TIER I -->
+    <div class="tier-card">
+      <span class="tier-label">Tier I</span>
+      <h3>Financial Execution Oversight &amp; Reporting Advisory</h3>
+      <p class="tier-tagline">Structured oversight and disciplined execution monitoring.</p>
+      <ul class="tier-features">
+        <li>Budget execution &amp; spend plan review</li>
+        <li>Burn rate trend analysis</li>
+        <li>Variance &amp; financial risk identification</li>
+        <li>Expiring funds exposure review</li>
+        <li>Advisory recommendations &amp; corrective options</li>
+        <li>Executive-ready summaries &amp; CFO-level memos</li>
+        <li>Optional dashboard add-on available</li>
+      </ul>
+      <div class="tier-pricing">
+        <div class="price-row">
+          <span class="price-label">Engagement</span>
+          <span class="price-value">$20K–$30K</span>
+        </div>
+        <div class="price-row" style="margin-top: 0.5rem;">
+          <span class="price-label">Dashboard Add-On</span>
+          <span class="price-value">$10K–$15K</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIER II -->
+    <div class="tier-card">
+      <span class="tier-label">Tier II</span>
+      <h3>Strategic Financial Management &amp; Decision Support</h3>
+      <p class="tier-tagline">Active advisory partnership with leadership.</p>
+      <ul class="tier-features">
+        <li>Monthly execution health checks</li>
+        <li>Scenario &amp; tradeoff analysis</li>
+        <li>Reprogramming &amp; execution strategy guidance</li>
+        <li>Funding shift risk &amp; timing advisory</li>
+        <li>CFO/PM briefing preparation</li>
+        <li>Slide deck &amp; executive talking points</li>
+        <li>Anticipated Q&amp;A preparation</li>
+      </ul>
+      <div class="tier-pricing">
+        <div class="price-row">
+          <span class="price-label">Retainer</span>
+          <span class="price-value">$12K–$18K/mo</span>
+        </div>
+        <p class="price-note">3-month minimum</p>
+      </div>
+    </div>
+
+    <!-- TIER III -->
+    <div class="tier-card">
+      <span class="tier-label">Tier III</span>
+      <h3>Analytics, Dashboards &amp; Financial Intelligence</h3>
+      <p class="tier-tagline">Infrastructure and sustainability.</p>
+      <ul class="tier-features">
+        <li>Dashboard design &amp; development</li>
+        <li>KPI identification &amp; alignment</li>
+        <li>Data model cleanup &amp; documentation</li>
+        <li>DAX measure documentation</li>
+        <li>Data dictionary &amp; governance</li>
+        <li>Knowledge transfer &amp; admin guide</li>
+        <li>Data refresh SOP</li>
+      </ul>
+      <div class="tier-pricing">
+        <div class="price-row">
+          <span class="price-label">Project</span>
+          <span class="price-value">$15K–$25K</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tier-grid -->
+
+  <!-- WHY A2A — LARGE -->
+  <div class="why-a2a">
+    <div class="why-a2a-header">
+      <p class="section-eyebrow">Why A2A</p>
+      <p class="pull-quote">"Why hire a Deputy CFO when you can retain one?"</p>
+    </div>
+    <div class="comparison-grid">
+      <div class="comp-col hire-col">
+        <div class="comp-col-title">Senior FM Director / Deputy CFO (W2)</div>
+        <div class="comp-row"><span class="comp-key">Salary</span><span class="comp-val">$145K/yr</span></div>
+        <div class="comp-row"><span class="comp-key">Benefits &amp; taxes (~30%)</span><span class="comp-val">$43K/yr</span></div>
+        <div class="comp-row"><span class="comp-key">Onboarding, clearance &amp; overhead</span><span class="comp-val">$15K+</span></div>
+        <div class="total-row"><span class="total-label">Total Loaded Cost</span><span class="total-val">~$17,300/mo</span></div>
+      </div>
+      <div class="comp-col a2a-col">
+        <div class="comp-col-title">A2A Solutions (Advisory)</div>
+        <div class="comp-row"><span class="comp-key">Senior FM &amp; cleared expertise</span><span class="a2a-check">✓</span></div>
+        <div class="comp-row"><span class="comp-key">No benefits or overhead</span><span class="a2a-check">✓</span></div>
+        <div class="comp-row"><span class="comp-key">No long-term commitment</span><span class="a2a-check">✓</span></div>
+        <div class="total-row"><span class="total-label">Starting At</span><span class="total-val">$12,000/mo</span></div>
+      </div>
+    </div>
+    <p class="comparison-footnote">Salary estimate based on senior federal FM director / Deputy CFO profile. Loaded cost includes benefits, payroll taxes, clearance sponsorship, and general overhead. A2A delivers cleared, senior-level advisory at a fraction of the cost — scalable, flexible, and commitment-free.</p>
+  </div>
+
+</section>
+
+
+<!-- FOOTER CTA -->
+<div class="footer-cta">
+  <p>Ready for Clarity, Control,<br>and Confident Decision-Making?</p>
+  <div class="contact-info">
+    <div class="contact-item">Phone: <a href="tel:2026814325">(202) 681-4325</a></div>
+    <div class="contact-item">Email: <a href="mailto:bfoster@a2asolutions.org">bfoster@a2asolutions.org</a></div>
+    <div class="contact-item">Web: <a href="https://a2asolutions.org" target="_blank">a2asolutions.org</a></div>
+  </div>
+</div>
+
+<footer class="page-footer">
+  <span>A2A SOLUTIONS</span> &nbsp;·&nbsp; Financial Management &amp; Advisory Services &nbsp;·&nbsp; Clarity. Control. Confident Decision-Making.
+</footer>
+
+<script>
+  function switchTrack(track) {
+    document.querySelectorAll('.track-section').forEach(s => s.classList.remove('visible'));
+    document.querySelectorAll('.track-btn').forEach(b => b.classList.remove('active'));
+
+    if (track === 'small') {
+      document.getElementById('track-small').classList.add('visible');
+      document.querySelectorAll('.track-btn')[0].classList.add('active');
+    } else {
+      document.getElementById('track-large').classList.add('visible');
+      document.querySelectorAll('.track-btn')[1].classList.add('active');
+    }
+  }
+</script>
+</body>
+</html>

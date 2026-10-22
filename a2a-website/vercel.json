@@ -1,0 +1,8 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/services(.html)?", "destination": "/govcon", "permanent": true },
+    { "source": "/projects(.html)?", "destination": "/govcon", "permanent": true }
+  ]
+}

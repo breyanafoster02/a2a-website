@@ -13,7 +13,7 @@
   var form=document.getElementById('contactForm');
   if(!form) return;
   var sel=document.getElementById('service'), st=document.getElementById('formStatus');
-  var map={federal:'Federal Subcontracting Opportunity',commercial:'Commercial CFO Retainer (Tier I)',general:'General Inquiry'};
+  var map={federal:'Federal Subcontracting Opportunity',govcon:'GovCon Firm Financial Advisory',commercial:'Commercial CFO Retainer (Tier I)',general:'General Inquiry'};
   try{
     var q=new URLSearchParams(location.search).get('service');
     if(q && map[q]) sel.value=map[q];
